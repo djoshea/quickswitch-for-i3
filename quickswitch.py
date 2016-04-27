@@ -153,7 +153,16 @@ def create_lookup_table(windows):
 
 def rename_nonunique(windows):
     '''Rename all windows which share a name by appending an index.'''
+    #import pprint
+    #pp = pprint.PrettyPrinter(indent=2)
+    #pp.pprint(windows)
     window_names = [window.get('name') for window in windows]
+    for i in range(len(windows)):
+        #print windows[i].get('window_properties')
+        if windows[i].get('window_properties') is not None:
+            wclass = windows[i].get('window_properties').get('class')
+            if wclass is not None:
+                window_names[i] = u"{} [{}]".format(windows[i].get('name'), wclass)
     for name in window_names:
         count = window_names.count(name)
         if count > 1:
